@@ -2,21 +2,22 @@ import { ErrorRequestHandler } from "express";
 import logger from "./logger";
 
 const expressErrorHandler: ErrorRequestHandler = (
-  err,
+  error,
   _req,
   res,
   _next
 ): void => {
-  if (err.message === "INVALID_FILE_TYPE") {
+  if (error.message === "INVALID_FILE_TYPE") {
     logger.error("Invalid file type");
 
     res.status(400).json({
-      message: "Invalid file type",
+      message: error.message,
     });
     return;
   }
+  logger.error("Server error", error);
 
-  res.status(500).json({ message: "server error" });
+  res.status(500).json({ message: "SERVER_ERROR" });
 };
 
 export default expressErrorHandler;
