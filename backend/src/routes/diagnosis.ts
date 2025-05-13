@@ -6,6 +6,7 @@ import {
 } from "./schema/diagnosis.schema";
 import { validateReqSchema } from "#middlewares/schemaValidator.middleware.js";
 import { upload } from "#utils/multer.js";
+import { getDiagnosisReport } from "#controllers/getDiagnsis.controller.js";
 
 const router = express.Router();
 
@@ -23,11 +24,19 @@ router.post(
   }
 );
 
-router.get("/:fileId", validateReqSchema(getDiagnosisSchema), (req, res) => {
-  logger.info("parsed the diagnosis file");
-  // read from the file.
+router.get(
+  "/:fileId",
+  validateReqSchema(getDiagnosisSchema),
+  async (req, res) => {
+    const result = await getDiagnosisReport(req.params.fileId);
 
-  res.send(200);
-});
+    if (result.outcome === "FAILURE") {
+      res.status(400).json({ message: result.reason });
+      return;
+    }
+
+    res.status(200).json({ result });
+  }
+);
 
 export default router;

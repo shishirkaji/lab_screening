@@ -30,6 +30,7 @@ export const loggerMiddleWare = (
         logger.info("Finish request", {
           responseTimeMs: Date.now() - reqStartTime,
           attempt: numberOfRequests++,
+          statusCode: res.statusCode,
         });
       });
 
