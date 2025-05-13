@@ -1,0 +1,37 @@
+{
+  "name": "lab_screen_server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc --project tsconfig.json",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "author": "shishirkaji@gmail.com",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.26.0",
+    "@tsconfig/node20": "^20.1.5",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.17",
+    "eslint": "^9.26.0",
+    "eslint-plugin-perfectionist": "^4.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
+  },
+  "imports": {
+    "#*": "./src/*"
+  }
+}
