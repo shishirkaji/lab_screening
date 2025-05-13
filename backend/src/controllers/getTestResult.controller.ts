@@ -3,12 +3,12 @@ import logger from "#utils/logger.js";
 import fs from "fs/promises";
 // @ts-ignore
 import HL7 from "hl7-standard";
-import { deriveReport, Report } from "./getReport.deriver";
+import { deriveReport, TestResult } from "./getTestResult.deriver";
 
 type Result =
   | {
       outcome: "SUCCESS";
-      report: Report;
+      result: TestResult;
     }
   | {
       outcome: "FAILURE";
@@ -42,9 +42,15 @@ export const getReport = async (testReportId: string): Promise<Result> => {
 
   const testMetrics = metricsRepository.getAllTestMetrics();
 
-  const result = deriveReport(hl7, testMetrics);
+  const derivedOutcome = deriveReport(hl7, testMetrics);
 
-  const report: Report = result;
+  const result =
+    derivedOutcome.outcome === "SUCCESS"
+      ? { outcome: "SUCCESS" as const, result: derivedOutcome.report }
+      : {
+          outcome: "FAILURE" as const,
+          reason: "FAILED_TO_GET_REPORT" as const,
+        };
 
-  return { outcome: "SUCCESS", report };
+  return result;
 };

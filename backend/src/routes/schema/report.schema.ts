@@ -5,9 +5,3 @@ export const reportUploadSchema = z.object({
     fileId: z.string().uuid(),
   }),
 });
-
-export const getReportSchema = z.object({
-  params: z.object({
-    reportId: z.string().uuid(),
-  }),
-});

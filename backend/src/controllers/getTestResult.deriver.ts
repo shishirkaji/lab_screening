@@ -4,7 +4,7 @@ import {
 } from "#repository/testMetric/testMetric.repo.js";
 import logger from "#utils/logger.js";
 
-export type Report = {
+export type TestResult = {
   reportId: string;
   patient: {
     id: string;
@@ -27,11 +27,12 @@ export type Report = {
 type DeriveReportOutcome =
   | {
       outcome: "SUCCESS";
-      report: Report;
+      report: TestResult;
     }
   | {
       outcome: "FAILED_TO_EXTRACT_DATA_FROM_REPORT";
     };
+
 export const deriveReport = (
   hl7: {
     transform: () => void;
@@ -39,12 +40,13 @@ export const deriveReport = (
     // transformed: { OBX: { data: Record<`OBX.${number}`, string | number> }[] };
   },
   testMetrics: TestMetricMap
-): Report => {
+): DeriveReportOutcome => {
   hl7.transform();
 
   const transformed = hl7.transformed;
 
-  const evaluatedTestResults: Report["patient"]["evaluatedTestResults"] = [];
+  const evaluatedTestResults: TestResult["patient"]["evaluatedTestResults"] =
+    [];
 
   transformed?.OBX?.forEach((result: any) => {
     let observedValue: number;
@@ -91,8 +93,11 @@ export const deriveReport = (
   });
 
   return {
-    reportId: "reportId",
-    patient: { id: "dummyId", evaluatedTestResults },
+    outcome: "SUCCESS",
+    report: {
+      reportId: "reportId",
+      patient: { id: "dummyId", evaluatedTestResults },
+    },
   };
 };
 

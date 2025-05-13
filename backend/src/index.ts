@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import reportRouter from "#routes/report.js";
+import testResultRouter from "#routes/testResult.js";
 import expressErrorHandler from "#utils/errorHandler.js";
 import { loggerMiddleWare } from "#middlewares/logger.middleware.js";
 import { loadMetrics } from "#repository/testMetric/testMetric.repo.js";
@@ -24,6 +25,7 @@ const startServer = () => {
   });
 
   app.use("/api/report", reportRouter);
+  app.use("/api/result", testResultRouter);
 
   app.use(expressErrorHandler);
 
