@@ -14,13 +14,6 @@ diagram to show Domain Entities
 ![alt text](image-1.png)
 diagram to show pictured flow
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Installation
 
 Instructions on how to install and set up the project.
@@ -45,7 +38,3 @@ npm run dev
 cd ../client
 npm run dev
 ````
-
-```
-
-```
