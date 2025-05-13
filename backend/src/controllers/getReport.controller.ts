@@ -3,7 +3,7 @@ import logger from "#utils/logger.js";
 import fs from "fs/promises";
 // @ts-ignore
 import HL7 from "hl7-standard";
-import { deriveReport, Report } from "./getDiagnosis.deriver";
+import { deriveReport, Report } from "./getReport.deriver";
 
 type Result =
   | {
@@ -15,18 +15,16 @@ type Result =
       reason: "FAILED_TO_PARSE" | "FAILED_TO_GET_REPORT";
     };
 
-export const getDiagnosisReport = async (
-  diagnosisFileId: string
-): Promise<Result> => {
+export const getReport = async (testReportId: string): Promise<Result> => {
   // read file
   let data: string;
 
   try {
-    data = await fs.readFile("uploads/" + diagnosisFileId + ".txt", {
+    data = await fs.readFile("uploads/" + testReportId + ".txt", {
       encoding: "utf8",
     });
   } catch (error) {
-    logger.error("error while reading file", error, diagnosisFileId);
+    logger.error("error while reading file", error, testReportId);
 
     return { outcome: "FAILURE", reason: "FAILED_TO_GET_REPORT" };
   }
@@ -37,14 +35,14 @@ export const getDiagnosisReport = async (
   try {
     hl7 = new HL7(data);
   } catch (error) {
-    logger.error("error while reading file", error, diagnosisFileId);
+    logger.error("error while reading file", error, testReportId);
 
     return { outcome: "FAILURE", reason: "FAILED_TO_PARSE" };
   }
 
-  const diagnosisMetrics = metricsRepository.getAllTestMetrics();
+  const testMetrics = metricsRepository.getAllTestMetrics();
 
-  const result = deriveReport(hl7, diagnosisMetrics);
+  const result = deriveReport(hl7, testMetrics);
 
   const report: Report = result;
 

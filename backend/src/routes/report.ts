@@ -1,19 +1,16 @@
 import logger from "#utils/logger.js";
 import express from "express";
-import {
-  diagnosisUploadSchema,
-  getDiagnosisSchema,
-} from "./schema/diagnosis.schema";
+import { reportUploadSchema, getReportSchema } from "./schema/report.schema";
 import { validateReqSchema } from "#middlewares/schemaValidator.middleware.js";
 import { upload } from "#utils/multer.js";
-import { getDiagnosisReport } from "#controllers/getDiagnosis.controller.js";
+import { getReport } from "#controllers/getReport.controller.js";
 
 const router = express.Router();
 
 router.post(
   "/upload",
   upload.single("patient_record"),
-  validateReqSchema(diagnosisUploadSchema),
+  validateReqSchema(reportUploadSchema),
   (req, res) => {
     logger.info("file uploadded successfully", req.body);
 
@@ -25,10 +22,10 @@ router.post(
 );
 
 router.get(
-  "/:fileId",
-  validateReqSchema(getDiagnosisSchema),
+  "/:reportId",
+  validateReqSchema(getReportSchema),
   async (req, res) => {
-    const result = await getDiagnosisReport(req.params.fileId);
+    const result = await getReport(req.params.reportId);
 
     if (result.outcome === "FAILURE") {
       res.status(400).json({ message: result.reason });

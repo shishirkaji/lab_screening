@@ -1,7 +1,6 @@
 import express from "express";
 
-import diagnosisRouter from "./routes/diagnosis";
-
+import reportRouter from "#routes/report.js";
 import expressErrorHandler from "#utils/errorHandler.js";
 import { loggerMiddleWare } from "#middlewares/logger.middleware.js";
 import { loadMetrics } from "#repository/testMetric/testMetric.repo.js";
@@ -17,7 +16,7 @@ const startServer = () => {
     res.send("Server up!");
   });
 
-  app.use("/api/diagnosis", diagnosisRouter);
+  app.use("/api/report", reportRouter);
 
   app.use(expressErrorHandler);
 
