@@ -7,10 +7,8 @@ const expressErrorHandler: ErrorRequestHandler = (
   res,
   _next
 ): void => {
-  res.header({ rquid: 123 });
-
   if (err.message === "INVALID_FILE_TYPE") {
-    logger.error("Invalid file type", { rquid: "123" });
+    logger.error("Invalid file type");
 
     res.status(400).json({
       message: "Invalid file type",

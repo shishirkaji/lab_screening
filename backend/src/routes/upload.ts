@@ -1,3 +1,5 @@
+import logger from "#utils/logger.js";
+import winstonLogger from "#utils/logger.js";
 import express, { Request, Response } from "express";
 import fileUpload from "express-fileupload";
 import multer from "multer";
@@ -33,12 +35,14 @@ const upload = multer({
 
 router.post("/", upload.single("patient_record"), (req, res) => {
   if (!req.file) {
-    console.log("NO FILE");
+    logger.warn("No file found");
     res.status(400).json({
       message: "No file provided",
     });
     return;
   }
+
+  logger.info("file uploadded successfully");
 
   res.status(200).json({
     message: "File uploaded successfully",
