@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 import reportRouter from "#routes/report.js";
 import expressErrorHandler from "#utils/errorHandler.js";
@@ -9,7 +10,13 @@ import logger from "#utils/logger.js";
 const startServer = () => {
   const app = express();
   const PORT = 3000;
+  app.use(cors());
 
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+    })
+  );
   app.use(loggerMiddleWare);
 
   app.get("/", (req, res) => {
