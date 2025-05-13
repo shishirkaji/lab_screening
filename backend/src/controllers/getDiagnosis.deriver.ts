@@ -90,7 +90,10 @@ export const deriveReport = (
     }
   });
 
-  return { reportId: "asdf", patient: { id: "sdfds", evaluatedTestResults } };
+  return {
+    reportId: "reportId",
+    patient: { id: "dummyId", evaluatedTestResults },
+  };
 };
 
 const isNormal = (
