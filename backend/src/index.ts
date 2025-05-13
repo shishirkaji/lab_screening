@@ -4,6 +4,8 @@ import diagnosisRouter from "./routes/diagnosis";
 
 import expressErrorHandler from "#utils/errorHandler.js";
 import { loggerMiddleWare } from "#middlewares/logger.middleware.js";
+import { loadMetrics } from "#repository/testMetric/testMetric.repo.js";
+import logger from "#utils/logger.js";
 
 const startServer = () => {
   const app = express();
@@ -20,8 +22,10 @@ const startServer = () => {
   app.use(expressErrorHandler);
 
   app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    logger.info(`Server is running on http://localhost:${PORT}`);
   });
 };
 
 startServer();
+
+loadMetrics();

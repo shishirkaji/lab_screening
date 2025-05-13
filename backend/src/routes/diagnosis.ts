@@ -6,7 +6,7 @@ import {
 } from "./schema/diagnosis.schema";
 import { validateReqSchema } from "#middlewares/schemaValidator.middleware.js";
 import { upload } from "#utils/multer.js";
-import { getDiagnosisReport } from "#controllers/getDiagnsis.controller.js";
+import { getDiagnosisReport } from "#controllers/getDiagnosis.controller.js";
 
 const router = express.Router();
 
