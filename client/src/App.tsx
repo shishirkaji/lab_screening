@@ -48,7 +48,7 @@ function App() {
     try {
       if (uploadedFile) {
         const fetchData = async () => {
-          const response = await fetch(`http://localhost:3000/api/report/${uploadedFile}`)
+          const response = await fetch(`http://localhost:3000/api/result/${uploadedFile}`)
 
           if (!response.ok) {
             throw new Error('Network response was not ok')
@@ -58,7 +58,7 @@ function App() {
 
           const data = await response.json()
 
-          setResultData(data.result.report)
+          setResultData(data.result)
 
         }
         fetchData()
